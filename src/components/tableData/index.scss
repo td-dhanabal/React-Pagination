@@ -1,0 +1,50 @@
+.body-container {
+    position: relative;
+    top: 60px;
+
+
+
+    .title-body {
+        padding: 20px;
+
+        .right-content {
+            h3 {
+                margin: 0;
+            }
+        }
+
+        .left-side-content {
+            text-align: right;
+
+            button {
+                color: #fff;
+                background: #4e48c8;
+            }
+        }
+    }
+
+    .table-container {
+        margin: 3%;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+
+    .pagination-container {
+        margin: 20px;
+        padding: 20px;
+        text-align: right;
+
+    }
+
+
+
+}
+
+.submit-btn {
+    text-align: right;
+}
+
+.ant-modal-title {
+    text-align: center !important;
+    padding: 20px !important;
+    font-size: 20px !important;
+}
