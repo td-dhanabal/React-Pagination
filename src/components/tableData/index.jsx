@@ -48,6 +48,11 @@ const TableData = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
+    useEffect(() => {
+        fetchUsersData();
+    }, []);
+
     const fetchUsersData = async () => {
         setLoading(true);
         try {
@@ -66,12 +71,13 @@ const TableData = () => {
 
         }
     }
-    useEffect(() => {
-        fetchUsersData();
-    }, []);
+
 
     const handleTableChange = async (page, size) => {
+        console.log('page', page);
+        console.log('size', size);
         if (tableParams.page !== page) {
+            console.log('true');
             try {
                 setLoading(true);
                 const userResponse = await getRequest(serviceApi.page(page))
@@ -87,6 +93,7 @@ const TableData = () => {
 
             }
         } else {
+            console.log('false');
             try {
                 setLoading(true);
                 const userResponse = await getRequest(serviceApi.size(size))
@@ -120,6 +127,7 @@ const TableData = () => {
     return (
         <>
             <Header />
+            {console.log('userCount',tableParams?.userCount)}
             <div className='body-container'>
                 <Row className='title-body' gutter={16} style={{ margin: 0 }}>
                     <Col className="gutter-row right-content" span={12} >
@@ -132,7 +140,7 @@ const TableData = () => {
                 <div className='table-container'>
                     <Table
                         columns={columns}
-                        // rowKey={(record) => record.login.uuid}
+                        rowKey={(record) => record.id}
                         dataSource={data}
                         loading={loading}
                         pagination={false}
@@ -140,12 +148,10 @@ const TableData = () => {
                 </div>
                 <div className='pagination-container'>
                     <Pagination showSizeChanger onChange={handleTableChange}
-                        // defaultCurrent={1}
                         loading={loading}
                         current={tableParams?.page}
                         total={tableParams?.userCount}
-                    // pageSize={tableParams?.size}
-                    // defaultPageSize={tableParams?.size}
+                        pageSize={tableParams?.size}
                     />
                 </div>
                 <Modal title="Create User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
@@ -154,7 +160,7 @@ const TableData = () => {
                         onFinish={handleRegisterSubmit}
                         autoComplete="off"
                     >
-                        <Form.Item name="firstname">
+                        <Form.Item name="firstname" rules={[{ required: true, message: "First name is required" }]}>
                             <Input
                                 placeholder="First Name"
                                 className="input-box"
@@ -162,21 +168,21 @@ const TableData = () => {
                                 type="text"
                             />
                         </Form.Item>
-                        <Form.Item name="lastname">
+                        <Form.Item name="lastname" rules={[{ required: true, message: "Last name is required" }]}>
                             <Input
                                 placeholder="Last Name"
                                 className="input-box"
                                 type="text"
                             />
                         </Form.Item>
-                        <Form.Item name="email">
+                        <Form.Item name="email" rules={[{ required: true, message: "Email is required" }]}>
                             <Input
                                 placeholder="Email"
                                 className="input-box"
                                 type="email"
                             />
                         </Form.Item>
-                        <Form.Item name="mobilenumber">
+                        <Form.Item name="mobilenumber" rules={[{ required: true, message: "Mobile number is required" }]}>
                             <Input
                                 placeholder="Mobile Number"
                                 className="input-box"
